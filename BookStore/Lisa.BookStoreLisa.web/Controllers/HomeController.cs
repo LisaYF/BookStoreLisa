@@ -10,6 +10,7 @@ namespace Lisa.BookStoreLisa.web.Controllers
     {
         public ActionResult Index()
         {
+            string s = "Hello World";
             return View();
         }
 
