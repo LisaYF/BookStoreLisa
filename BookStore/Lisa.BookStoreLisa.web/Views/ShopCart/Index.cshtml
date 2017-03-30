@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Lisa.BookStoreLisa.web.Models.Cart>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<form>
+
+</form>
+<table class="table">
+    <tr>
+        <th>Image</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CartId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr id="record_@item.RecordId">
+        <td><img src="@item.Book.ImageUrl" /></td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Book.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Book.Price)
+        </td>
+        <td>
+            <input type="text" class="count" data-id="@item.RecordId" value="@item.Count" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @*@Html.ActionLink("移除", "Delete", new { id = item.RecordId },new { @class="delete"})*@
+        <a href="#" class="delete" data-id="@item.RecordId" style="color:#330033;">移除</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td>
+           
+        </td>
+        <td>
+          
+        </td>
+        <td>
+       </td>
+        <td>
+       </td>
+        <td>
+       </td>
+        <td style="color:#330033;">
+            总价格：
+       </td>
+        <td>
+        </td>
+        <td>
+       <text id="price">@ViewBag.TotalPrice</text>
+       </td>
+       
+    </tr>
+ 
+}
+
+</table>
+<button class="btn btn-primary btn-lg pull-right"  style="background-color:#330033;" id="OrderButton" type="submit" >提交订单</button>
+
+@section Scripts{
+    <link href="~/Content/jquery.spinner.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.spinner.js" type="text/javascript"></script>
+    <script>
+        $(function () {
+            $(".count").spinner();
+            $(".count").bind("update", function () {
+                var recordID = $(this).attr("data-id");
+                var count = $(this).val();
+                $.post("/ShopCart/UpdateCount", { recordID: recordID, count: count },
+                    function (data) {
+                        $("#price").text(data.TotalPrice);
+                        $("#total_count").text(data.TotalCount);
+
+                });
+            })
+            $(".delete").click(
+                function () {
+                var isDelete = confirm("是否删除该记录?");
+                if (!isDelete)
+                {
+                    return false;
+                } else {
+                    var recordID=$(this).attr("data-id");
+                    $.post("/ShopCart/Delete",
+                         { recordID: recordID },
+                        function (data) {
+                            if (data.Status == 1) {
+                                $("#record_" + recordID).fadeOut();
+                                $("#price").text(data.TotalPrice);
+                                $("#total_count").text(data.TotalCount);
+                            }
+                    });
+                }
+            });
+         });
+   
+    </script>
+}
+
+

@@ -1,0 +1,27 @@
+﻿@using X.PagedList.Mvc
+@using X.PagedList
+@using Lisa.BookStoreLisa.web.Models
+@model IEnumerable<Lisa.BookStoreLisa.web.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Book List</h2>
+
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-sm-4 col-xs-6">
+            <p>
+                <img src="@item.ImageUrl" />
+            </p>
+            <p>@item.Title</p>
+        </div>
+    }
+
+</div>
+@Html.PagedListPager((IPagedList)Model,(p=>Url.Action("Index", new { pageNumber=p })))
+@*返回一个超链接*@

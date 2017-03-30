@@ -11,12 +11,12 @@ namespace Lisa.BookStoreLisa.web
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");//忽略哪一种类型的请求
 
-            routes.MapRoute(
+            routes.MapRoute(//映射哪种类型的请求
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }//默认home/Index
             );
         }
     }

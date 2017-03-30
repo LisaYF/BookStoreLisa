@@ -26,6 +26,7 @@ namespace Lisa.BookStoreLisa.web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            //把这两个CSS文件放到这个虚拟路径（"~/Content/css"）上面
         }
     }
 }
