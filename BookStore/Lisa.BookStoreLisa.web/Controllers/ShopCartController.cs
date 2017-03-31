@@ -19,13 +19,15 @@ namespace Lisa.BookStoreLisa.web.Controllers
            var list= _db.Carts.Where(
                 c => c.CartId ==User.Identity.Name).OrderByDescending(
                 c=>c.DateCreated).ToList();
-
-            decimal totle = 0;
+            
+            decimal? totle = 0;
             foreach (var item in list)
             {
+                
                 totle += item.Book.Price * (int)item.Count;
             }
             ViewBag.TotalPrice = totle;
+            
            return View(list);
         }
         public ActionResult UpdateCount(int? recordID,int? count)
@@ -57,7 +59,6 @@ namespace Lisa.BookStoreLisa.web.Controllers
                   &&c.CartId==User.Identity.Name);//Where返回的是一个集合
                 if (cart != null)
                 {
-                    
                     cart.Count += (int)count;
                 }
                 else
@@ -78,7 +79,7 @@ namespace Lisa.BookStoreLisa.web.Controllers
         [AllowAnonymous]
         public ActionResult GetShopCartSummary()
         {
-            int count = 0;
+            int? count = 0;
             if (User.Identity.IsAuthenticated)
             {
                 var list = _db.Carts.Where(
@@ -126,8 +127,8 @@ namespace Lisa.BookStoreLisa.web.Controllers
         private Tuple<decimal, int> GetTotal()
         {
             var list = _db.Carts.Where(c => c.CartId == User.Identity.Name);
-            decimal price = 0;
-            int count = 0;
+            decimal? price = 0;
+            int? count = 0;
             foreach (var item in list)
             {
                 price += item.Count * item.Book.Price;
@@ -135,7 +136,7 @@ namespace Lisa.BookStoreLisa.web.Controllers
             }
             //Tuple<decimal, int> result = new Tuple<decimal, int>(price,count);
 
-            return new Tuple<decimal, int>(price, count);
+            return new Tuple<decimal, int>((decimal)price, (int)count);
         }
         protected override void Dispose(bool disposing)
         {

@@ -30,9 +30,9 @@ namespace Lisa.BookStoreLisa.web.Models
                 .Property(e => e.Total)
                 .HasPrecision(18, 0);
 
-            modelBuilder.Entity<OrderDetail>()
-                .Property(e => e.UnitPrice)
-                .HasPrecision(18, 0);
+            //modelBuilder.Entity<OrderDetails>()
+            //    .Property(e => e.UnitPrice)
+            //    .HasPrecision(18, 0);
         }
     }
 }

@@ -8,20 +8,15 @@ namespace Lisa.BookStoreLisa.web.Models
 
     public partial class OrderDetail
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrderDetailsId { get; set; }
-
-        public int? OrderId { get; set; }
+        public int? OrderID { get; set; }
 
         public int? BookId { get; set; }
 
-        public int? Quantity { get; set; }
+        public int? Count { get; set; }
 
-        public decimal? UnitPrice { get; set; }
+        [Key]
+        public int OrderDetailsId { get; set; }
 
         public virtual Book Book { get; set; }
-
-        public virtual Order Order { get; set; }
     }
 }

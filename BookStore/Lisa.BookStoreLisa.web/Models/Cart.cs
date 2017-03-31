@@ -11,11 +11,12 @@ namespace Lisa.BookStoreLisa.web.Models
         [Key]
         public int RecordId { get; set; }
 
+        [StringLength(50)]
         public string CartId { get; set; }
 
         public int? BookId { get; set; }
 
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         public DateTime? DateCreated { get; set; }
 
